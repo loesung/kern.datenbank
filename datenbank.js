@@ -1,5 +1,5 @@
 /*
- * A registery server
+ * Database System
  *
  * This server listens on a UNIX socket. It provides all other servers on
  * this system with access to global options.

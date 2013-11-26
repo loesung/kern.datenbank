@@ -7,7 +7,9 @@
 require('./lib/baum.js');
 require('./lib/_.js');
 
-$.global.set('config', $.config.createConfig('./config/'));
+$.global.set('config', $.config.createConfig(
+    $.nodejs.url.resolve(process.argv[1], './config/')
+));
 
 var socketPath = $.global.get('config').get('socket-path');
 var dbPath = $.global.get('config').get('database-path');

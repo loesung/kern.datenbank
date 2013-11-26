@@ -12,9 +12,7 @@ module.exports = function(packet){
     var workflow = [];
     var database = $.global.get('database');
 
-    database.table('identity').select(
-        [{'id': 1, 'p': {$gt: 2, $lt: 10}}, {'id':3}]
-    );
+    database.table('identity').insert({id: 'abcdefg', data: 'abcdefghijklmn"=\''});
 
     $.nodejs.async.waterfall(workflow, function(err, result){
     packet.end('');

@@ -14,10 +14,25 @@ $.global.set('config', $.config.createConfig(
 var socketPath = $.global.get('config').get('socket-path');
 var dbPath = $.global.get('config').get('database-path');
 
+// Init database.
+function loadDb(err, db){
+    if(null == err){
+        console.log('Using database at: ' + dbPath);
+        $.global.set('database', db);
+    } else {
+        console.log('WARNING: UNABLE TO CONNECT TO DATABASE. ALL SERVICES WILL BE RETURNED WITH ERROR.');
+        $.global.set('database', null);
+    };
+};
+if($.nodejs.fs.existsSync(dbPath))
+    _.database.loadDatabase(dbPath, loadDb);
+else
+    _.database.createDatabase(dbPath, loadDb);
+
+
 var IPCServer = $.net.IPC.server(socketPath);
 console.log('IPC Server created at: ' + socketPath);
 
-console.log('Using database at: ' + dbPath);
 
 IPCServer.on('data', require('./site/__init__.js'));
 IPCServer.on('error', function(err){

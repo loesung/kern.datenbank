@@ -10,9 +10,12 @@ require('./lib/_.js');
 $.global.set('config', $.config.createConfig('./config/'));
 
 var socketPath = $.global.get('config').get('socket-path');
+var dbPath = $.global.get('config').get('database-path');
 
 var IPCServer = $.net.IPC.server(socketPath);
 console.log('IPC Server created at: ' + socketPath);
+
+console.log('Using database at: ' + dbPath);
 
 IPCServer.on('data', require('./site/__init__.js'));
 IPCServer.on('error', function(err){

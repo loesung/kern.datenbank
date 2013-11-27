@@ -12,7 +12,7 @@ var router = [
 
 module.exports = function(packet){
     var workflow = [], result = null, routerRule = null, handler = null;
-    var database = null;//$.global.get('database');
+    var database = $.global.get('database');
 
     for(var i in router){
         routerRule = router[i];

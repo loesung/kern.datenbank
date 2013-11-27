@@ -2,8 +2,10 @@ var router = [
     [/^\/identity\/query\/([0-9a-fA-F])+\/?$/,
                                             require('./identity.js'),   'DB',],
     [/^\/identity\/search\/keyword\/?$/,    require('./identity.js'),   'DB',],
-    [/^\/codebook\/(add|edit|remove)\/?$/,  require('./codebook.js'),   'DB', 'AUTH', 'POST'],
-    [/^\/codebook\/query\/([0-9a-fA-F]+)\/?$/,
+    [/^\/codebook\/(add)\/?$/,              require('./codebook.js'),   'DB', 'AUTH', 'POST'],
+    [/^\/codebook\/(edit|remove)\/([0-9a-fA-F]+)\/?$/,
+                                            require('./codebook.js'),   'DB', 'AUTH', 'POST'],
+    [/^\/codebook\/(query)\/([0-9a-fA-F]+)\/?$/,
                                             require('./codebook.js'),   'DB',],
     [/^\/?$/,                               require('./landmark.js'), ],
 ];

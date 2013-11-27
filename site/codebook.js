@@ -7,7 +7,10 @@ module.exports = function(packet, result, post, rueckruf){
     if(['add', 'edit', 'remove'].indexOf(action) >= 0){
     } else {
         workflow.push(function(callback){
-            codebook.retriveOne(result[2], function(err, row){
+            var condition = {
+                'id': result[2],
+            };
+            codebook.retriveOne(condition, function(err, row){
                 if(null == err)
                     callback(err);
                 else
@@ -21,7 +24,6 @@ module.exports = function(packet, result, post, rueckruf){
             rueckruf(err);
             return;
         };
-        console.log('Codebook query result', result); 
         rueckruf(null, result);
     });
 };

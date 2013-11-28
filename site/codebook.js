@@ -6,7 +6,19 @@ module.exports = function(packet, result, post, rueckruf){
     var waitPost = false;
     var post = null;
 
-    if(['add', 'edit', 'remove'].indexOf(action) >= 0){
+    if('query' == action){
+        workflow.push(function(callback){
+            var condition = {
+                'id': result[2],
+            };
+            codebook.retriveOne(condition, function(err, row){
+                if(null != err)
+                    callback(err);
+                else
+                    callback(null, JSON.stringify(row));
+            });
+        });
+    } else {
         waitPost = true;
         switch(action){
             case 'add':
@@ -25,21 +37,25 @@ module.exports = function(packet, result, post, rueckruf){
                     });
                 });
                 break;
+            case 'remove':
+                workflow.push(function(callback){
+                    var condition = {
+                        'id': result[2],
+                    };
+                    codebook.delete(condition, function(err){
+                        if(null != err)
+                            callback(404);
+                        else
+                            callback(null);
+                    });
+                });
+                break;
             default:
+                workflow.push(function(callback){
+                    callback(400);
+                });
                 break;
         };
-    } else {
-        workflow.push(function(callback){
-            var condition = {
-                'id': result[2],
-            };
-            codebook.retriveOne(condition, function(err, row){
-                if(null != err)
-                    callback(err);
-                else
-                    callback(null, JSON.stringify(row));
-            });
-        });
     };
 
     function doJob(p){

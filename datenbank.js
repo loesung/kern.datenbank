@@ -17,10 +17,10 @@ var dbPath = $.global.get('config').get('database-path');
 // Init database.
 function loadDb(err, db){
     if(null == err){
-        console.log('Using database at: ' + dbPath);
+        String('Using database at: ' + dbPath).NOTICE();
         $.global.set('database', db);
     } else {
-        console.log('WARNING: UNABLE TO CONNECT TO DATABASE. ALL SERVICES WILL BE RETURNED WITH ERROR.');
+        String('UNABLE TO CONNECT TO DATABASE. ALL SERVICES WILL BE RETURNED WITH ERROR.').WARNING();
         $.global.set('database', null);
     };
 };
@@ -31,13 +31,13 @@ else
 
 
 var IPCServer = $.net.IPC.server(socketPath);
-console.log('IPC Server created at: ' + socketPath);
+String('IPC Server created at: ' + socketPath).NOTICE();
 
 
 IPCServer.on('data', require('./site/__init__.js'));
 IPCServer.on('error', function(err){
     try{
-        console.log('ERROR! ' + err);
+        String(err).ERROR();
     } catch(e){
     };
 });

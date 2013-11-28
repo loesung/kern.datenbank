@@ -43,7 +43,8 @@ module.exports = function(packet){
     if(routerRule.indexOf('AUTH') >= 0){
         workflow.push(function(callback){
             // XXX do something
-            callback(401);
+            callback(null);
+//            callback(401);
         });
     };
 

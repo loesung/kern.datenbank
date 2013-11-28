@@ -50,6 +50,20 @@ module.exports = function(packet, result, post, rueckruf){
                     });
                 });
                 break;
+            case 'edit':
+                workflow.push(function(callback){
+                    var condition = {
+                        'id': result[2],
+                    };
+                    var sets = post.parsed;
+                    codebook.update(condition, sets, function(err){
+                        if(null != err)
+                            callback(404);
+                        else
+                            callback(null);
+                    });
+                });
+                break;
             default:
                 workflow.push(function(callback){
                     callback(400);

@@ -34,7 +34,7 @@ module.exports = function(packet, result, post, rueckruf){
                 'id': result[2],
             };
             codebook.retriveOne(condition, function(err, row){
-                if(null == err)
+                if(null != err)
                     callback(err);
                 else
                     callback(null, JSON.stringify(row));

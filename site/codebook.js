@@ -6,12 +6,16 @@ module.exports = function(packet, result, post, rueckruf){
     var waitPost = false;
     var post = null;
 
-    if('query' == action){
+    if('query' == action || 'search' == action){
         workflow.push(function(callback){
-            var condition = {
-                'id': result[2],
+            if('query' == action){
+                var func = codebook.retriveOne;
+                var condition = {id: result[2]};
+            } else {
+                var func = codebook.retrive;
+                var conditon = {buddy: result[2]};
             };
-            codebook.retriveOne(condition, function(err, row){
+            func(condition, function(err, row){
                 if(null != err)
                     callback(err);
                 else
@@ -25,6 +29,7 @@ module.exports = function(packet, result, post, rueckruf){
                 workflow.push(function(callback){
                     var doc = {
                         id: post.parsed.id,
+                        buddy: post.parsed.buddy,
                         origin: post.parsed.origin,
                         credential: post.parsed.credential,
                         decrypt: post.parsed.decrypt,

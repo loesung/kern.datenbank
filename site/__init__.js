@@ -1,8 +1,11 @@
 var router = [
     /* define identity access rules */
-    [/^\/identity\/query\/([0-9a-fA-F])+\/?$/,
+    [/^\/identity\/(query|search)\/([0-9a-fA-F]+)\/?$/,
                                             require('./identity.js'),   'DB',],
-    [/^\/identity\/search\/keyword\/?$/,    require('./identity.js'),   'DB',],
+    [/^\/identity\/?$/,                     require('./identity.js'),   'DB',],
+    [/^\/identity\/(remove)\/([0-9a-fA-F]+)\/?$/,
+                                            require('./identity.js'),   'DB', 'AUTH', 'POST'],
+    [/^\/identity\/(add)\/?$/,              require('./identity.js'),   'DB', 'AUTH', 'POST'],
 
     /* define codebook access rules */
     [/^\/codebook\/(add)\/?$/,              require('./codebook.js'),   'DB', 'AUTH', 'POST'],

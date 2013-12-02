@@ -13,7 +13,7 @@ module.exports = function(packet, result, post, rueckruf){
                 var condition = {id: result[2]};
             } else {
                 var func = queue.retrive;
-                var conditon = {tag: result[2]};
+                var condition = {tag: result[2]};
             };
             func(condition, function(err, row){
                 if(null != err)

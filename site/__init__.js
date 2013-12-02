@@ -1,16 +1,26 @@
 var router = [
+    /* define identity access rules */
     [/^\/identity\/query\/([0-9a-fA-F])+\/?$/,
                                             require('./identity.js'),   'DB',],
     [/^\/identity\/search\/keyword\/?$/,    require('./identity.js'),   'DB',],
 
-
+    /* define codebook access rules */
     [/^\/codebook\/(add)\/?$/,              require('./codebook.js'),   'DB', 'AUTH', 'POST'],
     [/^\/codebook\/(edit|remove)\/([0-9a-fA-F]+)\/?$/,
                                             require('./codebook.js'),   'DB', 'AUTH', 'POST'],
     [/^\/codebook\/(query|search)\/([0-9a-fA-F]+)\/?$/,
                                             require('./codebook.js'),   'DB',],
 
+    /* define queue access rules */
+    [/^\/queue\/(add)\/?$/,                 require('./queue.js'),   'DB', 'AUTH', 'POST'],
+    [/^\/queue\/(remove)\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/,
+                                            require('./queue.js'),   'DB', 'AUTH', 'POST'],
+    [/^\/queue\/(query)\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/,
+                                            require('./queue.js'),   'DB'],
+    [/^\/queue\/(search)\/([0-9a-f]+)\/?$/,
+                                            require('./queue.js'),   'DB',],
 
+    /* default: a benchmark or so */
     [/^\/?$/,                               require('./landmark.js'), ],
 ];
 

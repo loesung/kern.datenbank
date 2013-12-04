@@ -28,15 +28,18 @@ module.exports = function(packet, result, post, rueckruf){
             case 'add':
                 workflow.push(function(callback){
                     var doc = {
-                        id: post.parsed.id,
                         tag: post.parsed.tag,
                         data: post.parsed.data,
                     };
-                    queue.create(doc, function(err){
+                    queue.create(doc, function(err, e1){
                         if(null != err){
                             callback(422);
-                        } else
-                            callback(null);
+                        } else {    
+                            var output = null;
+                            if($.types.isObject(e1))
+                                output = JSON.stringify(e1);
+                            callback(null, output);
+                        };
                     });
                 });
                 break;

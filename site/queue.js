@@ -27,8 +27,11 @@ module.exports = function(packet, result, post, rueckruf){
         switch(action){
             case 'add':
                 workflow.push(function(callback){
+                    var comment = post.parsed.comment;
+                    if(!$.types.isString(comment)) comment = '';
                     var doc = {
                         tag: post.parsed.tag,
+                        comment: comment,
                         data: post.parsed.data,
                     };
                     queue.create(doc, function(err, e1){
